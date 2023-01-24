@@ -1,7 +1,7 @@
 # CrudBoard
 👀스프링으로 만드는 CRUD 게시판 -> 코드 재사용성을 위함
 
-#개발환경
+# 개발환경
 1. IDE: IntelliJ IDEA Community
 2. Spring Boot 
 3. JDK 17
@@ -9,7 +9,7 @@
 5. Spring Data JPA
 6. Thymeleaf
 
-#게시판 주요기능
+# 게시판 주요기능
 1. 글쓰기(/board/save)
 2. 글목록(/board/)
 3. 글조회(/board/{id})
@@ -37,7 +37,7 @@
         - detail.html
 
     - board_table(부모) - board_file_table(자식)
-
+```
 create table board_table
 (
 id             bigint auto_increment primary key,
@@ -50,8 +50,8 @@ board_title    varchar(255) null,
 board_writer   varchar(20)  not null,
 file_attached  int          null
 );
-
-
+```
+```
 create table board_file_table
 (
 id                 bigint auto_increment primary key,
@@ -63,9 +63,10 @@ board_id           bigint       null,
 constraint FKcfxqly70ddd02xbou0jxgh4o3
     foreign key (board_id) references board_table (id) on delete cascade
 );
-
+```
 9. mysql DataBase 계정 생성 및 권한 부여
-
+```
 create database db_codingrecipe;
 create user user_codingrecipe@localhost identified by '1234';
 grant all privileges on db_codingrecipe.* to user_codingrecipe@localhost;
+```
