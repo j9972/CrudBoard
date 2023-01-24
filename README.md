@@ -36,7 +36,8 @@
         - BoardFileEntity, BoardFileRepository 추가
         - detail.html
 
-8. board_table(부모) - board_file_table(자식)
+    - board_table(부모) - board_file_table(자식)
+
 create table board_table
 (
 id             bigint auto_increment primary key,
@@ -49,6 +50,7 @@ board_title    varchar(255) null,
 board_writer   varchar(20)  not null,
 file_attached  int          null
 );
+
 
 create table board_file_table
 (
@@ -63,6 +65,7 @@ constraint FKcfxqly70ddd02xbou0jxgh4o3
 );
 
 9. mysql DataBase 계정 생성 및 권한 부여
+
 create database db_codingrecipe;
 create user user_codingrecipe@localhost identified by '1234';
 grant all privileges on db_codingrecipe.* to user_codingrecipe@localhost;
