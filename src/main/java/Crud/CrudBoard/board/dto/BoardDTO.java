@@ -1,5 +1,6 @@
 package Crud.CrudBoard.board.dto;
 
+import Crud.CrudBoard.board.entity.BoardEntity;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -20,4 +21,32 @@ public class BoardDTO {
     private int boardHits; // 조회수
     private LocalDateTime boardCreatedTime; // 작성시간 -> 시간 관련은 별도 파일
     private LocalDateTime boardUpdatedTime; // 수정시간
+    
+    // Entity -> DTO 로 옮겨 담기
+    public static BoardDTO toBoardDTO(BoardEntity boardEntity) {
+        BoardDTO boardDTO = new BoardDTO();
+        boardDTO.setId(boardEntity.getId());
+        boardDTO.setBoardWriter(boardEntity.getBoardWriter());
+        boardDTO.setBoardPass(boardEntity.getBoardPass());
+        boardDTO.setBoardTitle(boardEntity.getBoardTitle());
+        boardDTO.setBoardContents(boardEntity.getBoardContents());
+        boardDTO.setBoardHits(boardEntity.getBoardHits());
+        boardDTO.setBoardCreatedTime(boardEntity.getCreatedTime());
+        boardDTO.setBoardUpdatedTime(boardEntity.getUpdatedTime());
+
+//        if (boardEntity.getFileAttached() == 0) {
+//            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 0
+//        } else {
+//            boardDTO.setFileAttached(boardEntity.getFileAttached()); // 1
+//            // 파일 이름을 가져가야 함.
+//            // orginalFileName, storedFileName : board_file_table(BoardFileEntity)
+//            // join
+//            // select * from board_table b, board_file_table bf where b.id=bf.board_id
+//            // and where b.id=?
+//            boardDTO.setOriginalFileName(boardEntity.getBoardFileEntityList().get(0).getOriginalFileName());
+//            boardDTO.setStoredFileName(boardEntity.getBoardFileEntityList().get(0).getStoredFileName());
+//        }
+
+        return boardDTO;
+    }
 }

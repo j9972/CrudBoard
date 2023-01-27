@@ -10,7 +10,8 @@ import lombok.Setter;
 @Getter @Setter
 @Table(name = "board_table")
 public class BoardEntity extends  BaseEntity{ // 시간 관련 정보를 상속 받음
-    @Id @GeneratedValue // Id 컬럼 -> pk 컬럼 지정 ( 필수 )
+    @Id // Id 컬럼 -> pk 컬럼 지정 ( 필수 )
+    @GeneratedValue
     private Long id;
 
     @Column(length = 20, nullable = false) // 크기 20, not null

@@ -6,9 +6,11 @@ import Crud.CrudBoard.board.entity.BoardEntity;
 import Crud.CrudBoard.board.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 // 서비스 클래스에서 하는 작업
 // DTO -> Entity ( Entity class 에서 할 것 )
@@ -28,14 +30,37 @@ import java.util.List;
 public class BoardService {
     private final BoardRepository boardRepository;
     public void save(BoardDTO boardDTO) {
+        // DTO -> Entity로 옮겨 담는
         BoardEntity boardEntity = BoardEntity.toSaveEntity(boardDTO);
         boardRepository.save(boardEntity); // 이렇게하면 insert 코드가 나가게 된다.
     }
 
     public List<BoardDTO> findAll() {
+        // Entity ( BoardEntity ) -> DTO ( BoardDTO ) 로 옮겨 담기
         List<BoardEntity> boardEntityList = boardRepository.findAll();
-        List<BoardDTO> boardDTOList = new ArrayList<>();
+        List<BoardDTO> boardDTOList = new ArrayList<>(); // 리턴할 객체
 
-        // Entity -> DTO 로 옮겨 담기
+        for(BoardEntity boardEntity : boardEntityList) {
+            boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
+        }
+
+        return boardDTOList;
+    }
+
+    // 조회수 증가 method
+    @Transactional // 별도의 method를 사용하는 경우는 @Transactional 이 필요하다
+    public void updateHits(Long id) {
+        boardRepository.updateHits(id);
+    }
+
+    public BoardDTO findById(Long id) {
+        Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
+        if(optionalBoardEntity.isPresent()) {
+            BoardEntity boardEntity = optionalBoardEntity.get();
+            BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
+            return boardDTO;
+        } else {
+            return null;
+        }
     }
 }
