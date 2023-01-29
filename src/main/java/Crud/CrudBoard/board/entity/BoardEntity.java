@@ -39,4 +39,15 @@ public class BoardEntity extends  BaseEntity{ // 시간 관련 정보를 상속 
         boardEntity.setBoardHits(0); // 기본값은 0이기 때문에
         return boardEntity;
     }
+
+    public static BoardEntity toUpdateEntity(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setId(boardDTO.getId());
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(boardDTO.getBoardHits());
+        return boardEntity;
+    }
 }

@@ -63,4 +63,15 @@ public class BoardService {
             return null;
         }
     }
+
+    public BoardDTO update(BoardDTO boardDTO) {
+        // toUpdateEntity 는 Entity 파일에 만들어 준다
+        BoardEntity boardEntity = BoardEntity.toUpdateEntity(boardDTO);
+        boardRepository.save(boardEntity);
+        return  findById(boardEntity.getId());
+    }
+
+    public void delete(Long id) {
+        boardRepository.deleteById(id);
+    }
 }
