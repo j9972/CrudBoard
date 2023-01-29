@@ -37,7 +37,7 @@ public class BoardController {
 
     @GetMapping("/")
     public String findAll(Model model) {
-        // DB에서 전체 게시글을 가져와서 list.html에 뿌려준다
+        // DB에서 전체 게시글 데이터를 가져와서 list.html에 보여준다.
         List<BoardDTO> boardDTOList = boardService.findAll();
         model.addAttribute("boardList", boardDTOList);
         return "list";
@@ -45,8 +45,14 @@ public class BoardController {
 
     @GetMapping("/{id}")
     public String findById(@PathVariable Long id, Model model) {
-        boardService.updateHits(id); // 해당 게시글의 조회수를 하나 올리고
-        BoardDTO boardDTO = boardService.findById(id); // 게시글 데이터를 가져와서
-        return "detail"; // detail.html에 출력
+        /*
+            해당 게시글의 조회수를 하나 올리고
+            게시글 데이터를 가져와서 detail.html에 출력
+         */
+        boardService.updateHits(id);
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+
+        return "detail";
     }
 }

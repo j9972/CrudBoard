@@ -35,15 +35,14 @@ public class BoardService {
         boardRepository.save(boardEntity); // 이렇게하면 insert 코드가 나가게 된다.
     }
 
+    @Transactional
     public List<BoardDTO> findAll() {
         // Entity ( BoardEntity ) -> DTO ( BoardDTO ) 로 옮겨 담기
         List<BoardEntity> boardEntityList = boardRepository.findAll();
-        List<BoardDTO> boardDTOList = new ArrayList<>(); // 리턴할 객체
-
-        for(BoardEntity boardEntity : boardEntityList) {
+        List<BoardDTO> boardDTOList = new ArrayList<>();
+        for (BoardEntity boardEntity: boardEntityList) {
             boardDTOList.add(BoardDTO.toBoardDTO(boardEntity));
         }
-
         return boardDTOList;
     }
 
@@ -53,9 +52,10 @@ public class BoardService {
         boardRepository.updateHits(id);
     }
 
+    @Transactional
     public BoardDTO findById(Long id) {
         Optional<BoardEntity> optionalBoardEntity = boardRepository.findById(id);
-        if(optionalBoardEntity.isPresent()) {
+        if (optionalBoardEntity.isPresent()) {
             BoardEntity boardEntity = optionalBoardEntity.get();
             BoardDTO boardDTO = BoardDTO.toBoardDTO(boardEntity);
             return boardDTO;
