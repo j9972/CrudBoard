@@ -22,6 +22,7 @@ public class BoardDTO {
     private LocalDateTime boardCreatedTime; // 작성시간 -> 시간 관련은 별도 파일
     private LocalDateTime boardUpdatedTime; // 수정시간
 
+    // Page 객체를 통해서 화면에 보여주고 싶은 데이터를 뽑아준다.
     public BoardDTO(Long id, String boardWriter, String boardTitle, int boardHits, LocalDateTime boardCreatedTime) {
         this.id = id;
         this.boardWriter = boardWriter;

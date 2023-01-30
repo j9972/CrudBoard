@@ -42,7 +42,7 @@
 </span>
 
 <!-- 다음 링크 활성화 비활성화
-    사용자: 2페이지, getNumber: 1, 3페이지-->
+     + 2 인 이유 : 사용자: 2페이지, getNumber: 1, 3페이지-->
 <a th:href="${boardList.last} ? '#' : @{/board/paging(page=${boardList.number + 2})}">next</a>
 <!-- 마지막 페이지로 이동 -->
 <a th:href="@{/board/paging(page=${boardList.totalPages})}">Last</a>
