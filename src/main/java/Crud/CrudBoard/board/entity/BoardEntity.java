@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // DB 테이블 역할을 하는 클래스
 @Entity
 @Getter @Setter
@@ -29,6 +32,13 @@ public class BoardEntity extends  BaseEntity{ // 시간 관련 정보를 상속 
     @Column
     private int boardHits;
 
+    @Column
+    private int fileAttached; // 1 or 0
+
+    // 부모 엔티티 ( boardFileEntity에 대해서 )
+    @OneToMany(mappedBy = "boardEntity", cascade = CascadeType.REMOVE, orphanRemoval = true, fetch = FetchType.LAZY)
+    private List<BoardFileEntity> boardFileEntityList = new ArrayList<>();
+
     // 옮겨 담는 작업
     public static BoardEntity toSaveEntity(BoardDTO boardDTO) {
         BoardEntity boardEntity = new BoardEntity();
@@ -36,7 +46,8 @@ public class BoardEntity extends  BaseEntity{ // 시간 관련 정보를 상속 
         boardEntity.setBoardPass(boardDTO.getBoardPass());
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
-        boardEntity.setBoardHits(0); // 기본값은 0이기 때문에
+        boardEntity.setBoardHits(0); // 기본값은 0이기 때문에드
+        boardEntity.setFileAttached(0); // 파일 없음. ( 기본값으로 세팅 )
         return boardEntity;
     }
 
@@ -48,6 +59,17 @@ public class BoardEntity extends  BaseEntity{ // 시간 관련 정보를 상속 
         boardEntity.setBoardTitle(boardDTO.getBoardTitle());
         boardEntity.setBoardContents(boardDTO.getBoardContents());
         boardEntity.setBoardHits(boardDTO.getBoardHits());
+        return boardEntity;
+    }
+
+    public static BoardEntity toSaveFileEntity(BoardDTO boardDTO) {
+        BoardEntity boardEntity = new BoardEntity();
+        boardEntity.setBoardWriter(boardDTO.getBoardWriter());
+        boardEntity.setBoardPass(boardDTO.getBoardPass());
+        boardEntity.setBoardTitle(boardDTO.getBoardTitle());
+        boardEntity.setBoardContents(boardDTO.getBoardContents());
+        boardEntity.setBoardHits(0); // 기본값은 0이기 때문에드
+        boardEntity.setFileAttached(1); // 파일 있음
         return boardEntity;
     }
 }
